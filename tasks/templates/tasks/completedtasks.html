@@ -1,0 +1,26 @@
+{% extends "tasks/layout.html" %}
+{% load static %}
+
+{% block title %} Complete {% endblock %}
+
+{% block body %}
+
+    <h1>Hey {{ user }} great job on completing these!</h1>
+    
+    <p class="counter" style="display:none"></p>
+
+    <!-- Loop for tasks includes removal button -->
+    <h2>Completed Tasks</h2>
+
+    {% for task in tasks %}
+    {% csrf_token %}
+        <div class="card" style="width: 22rem; margin-bottom: 10px; margin-left: 10px;" data-task="{{ task.id }}">
+            <div class="card-body">
+                <p class="card-text">Description: {{ task.description }}</p>
+                <p class="card-text"> {{ task.min }} minute(s),{{ task.sec }} seconds </p>
+                <p class="card-text">Date: {{ task.completion_date }}</p>
+                <button class="remove" data-task="{{ task.id }}">Remove</button>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

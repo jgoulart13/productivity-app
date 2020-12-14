@@ -1,0 +1,83 @@
+
+.remove {
+    color:blue;
+}
+
+.select {
+    color:blue;
+}
+
+.form-label {
+    color: #708090;
+    font-weight: bold;
+    font-size: 15px;
+    font-family: Verdana;
+}
+
+.form-group-margin {
+    margin-left: 25px;
+}
+
+.h2-title {
+    color: #1E90FF;
+    font-weight: bold;
+    font-size: 30px;
+    font-family: Verdana;
+    margin-left: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.h2-center {
+    color: #2F4F4F;
+    font-weight: bold;
+    font-size: 30px;
+    font-family: Verdana;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.form-button {
+    margin-left: 25px;
+}
+
+.card-margin{
+    margin-left: 25px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.h1-title{
+    color: #1E90FF;
+    font-weight: bold;
+    font-size: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+.sub-title{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.timer{
+    outline: 2px solid grey;
+    text-align: center;
+}
+
+.nav-heading{
+    font-size: 50px;
+}
+
+.nav-subheading{
+    font-size: 20px;
+}
+
+.container{
+    width: 75%;
+}    

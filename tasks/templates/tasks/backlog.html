@@ -1,0 +1,61 @@
+{% extends "tasks/layout.html" %}
+{% load static %}
+
+{% block title %} Task Backlog {% endblock %}
+
+{% block body %}
+
+    <input type="hidden" id="refresh" value="no">
+
+    <p class="counter" style="display:none"></p>
+
+    <h1 class="h1-title">Manage Projects</h1>
+    <small class="form-text text-muted sub-title">Create and track projects here!</small>
+
+    <!-- Form to create new Projects -->
+    <h2 class="h2-title">Create Projects</h2>
+    <form action="{% url 'create' %}" method="post">
+        {% csrf_token %}
+            <div class="form-group form-group-margin">
+                <label class="form-label">Project Title</label>
+                <input type="text" class="form-control" placeholder="Project Title" name="title">
+                <small id="emailHelp" class="form-text text-muted">Keep your titles simple and to the point.</small>
+            </div>
+            <div class="form-group form-group-margin">
+                <label class="form-label">Anticipated Completion Date</label>
+                <input type="date" class="form-control input" max="3000-12-31" min="1000-01-01" name="anticipated_completion_date">
+                <small class="form-text text-muted">When do you expect to complete this project?</small>
+            </div>
+            <div>
+                <input style="display: none;" type="text" name="formtype" value="project">
+            </div>
+            <button type="create" class="btn btn-outline-primary form-button">Create</button>
+    </form>
+
+    <!-- Loop for Projects includes complete button -->
+    <h2 class="h2-title">Projects</h2>
+        <div class="row">
+            {% for project in projects %}
+            <div class="col-sm-6">
+                <div class="card card-margin">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ project.project_title }}</h5>
+                        <p class="card-text">Target Date: {{ project.anticipated_completion_date }}</p>
+                        <a href="{% url 'project' project.id %}" class="btn btn-outline-secondary">Tasks & Reminders</a>
+                        <button class="complete btn btn-outline-success" data-projectid="{{ project.id }}" data-type="project">Complete</button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            <div class="col-sm-6">
+                <div class="card card-margin">
+                    <div class="card-body">
+                        <h5 class="card-title">No Project Assigned</h5>
+                        <a href="{% url 'project' impossible_project_id %}" class="btn btn-outline-secondary">Tasks & Reminders</a>
+                        <small class="form-text text-muted">Manage tasks without projects here.</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+{% endblock %}

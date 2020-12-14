@@ -1,0 +1,52 @@
+{% extends "tasks/layout.html" %}
+{% load static %}
+
+{% block title %} Task View {% endblock %}
+
+{% block body %}
+
+    {{ tests }}
+
+    <h1 class="h2-center">Hey {{ user }}, what do you need to get done today?</h1>
+
+    <!-- Loop for tasks includes deselect, start, pause, unpause, and complete buttons -->
+    <h2 class="h2-title">All Tasks</h2>
+    <div class="row">
+        {% for task in tasks %}
+        {% csrf_token %}
+        <div class="col-sm-6">
+            <div class="card card-margin" data-task="{{ task.id }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ task.description }}</h5>
+                    <p class="card-text">Project: {{ task.project.project_title }}</p>
+                    <p class="card-text timer" id= "timer_{{ task.id }}"> {{ task.min }} minute(s),{{ task.sec }} seconds </p>
+                    <button class="select btn btn-outline-warning" data-task="{{ task.id }}">Unselect</button>
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="start btn btn-secondary" data-task="{{ task.id }}">&#9658</button>
+                        <button type="button" class="pause btn btn-secondary" id= "pause_{{ task.id }}" data-task="{{ task.id }}" style="display: none;">&#10074 &#10074</button>
+                        <button type="button" class="complete btn btn-secondary" data-task="{{ task.id }}" id= "complete_{{ task.id }}" data-type="task">Complete</button>
+                    </div>
+                    <small class="form-text text-muted">Remember to pause the timer before you leave the page!</small>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Loop for reminders includes completed button -->
+    <h2 class="h2-title">All Reminders</h2>
+    <div class="row">
+        {% for reminder in reminders %}
+        <div class="col-sm-6">
+            <div class="card card-margin" data-task="{{ reminder.id }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ reminder.description }}</h5>
+                    <p class="card-text">Project: {{ reminder.project.project_title }}</p>
+                    <button type="button" class="complete" data-reminder="{{ reminder.id }}" id= "complete_{{ reminder.id }}" data-type="reminder">Complete</button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

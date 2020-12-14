@@ -1,0 +1,83 @@
+{% extends "tasks/layout.html" %}
+{% load static %}
+
+{% block title %} Task Backlog {% endblock %}
+
+{% block body %}
+
+    <p class="counter" style="display:none"></p>
+
+    <!-- Form to create new reminders -->
+    <h2 class="h2-title">Create Reminders</h2>
+    <form action="{% url 'create' %}" method="post">
+        {% csrf_token %}
+            <div class="form-group form-group-margin">
+                <label class="form-label">Reminder</label>
+                <input type="text" class="form-control" placeholder="example: Talk to Jon about proposal" name="content">
+                <small id="emailHelp" class="form-text text-muted">Keep your reminders simple and to the point.</small>
+            </div>
+            <div class="form-group form-group-margin">
+                <label class="form-label">Date of Reminder</label>
+                <input type="date" class="form-control" max="3000-12-31" min="1000-01-01" name="reminder_date">
+                <small id="emailHelp" class="form-text text-muted">What day is this reminder set for?</small>
+            </div> 
+            <div>
+                <select style="display: none;" name="project">
+                    <option value="20000">None</option>
+                </select>
+                <input style="display: none;" type="text" name="formtype" value="reminder">
+            </div>           
+            <button type="submit" class="btn btn-outline-primary form-button">Create</button>
+    </form>
+
+    <!-- Form to create new tasks -->
+    <h2 class="h2-title">Create Tasks</h2>
+    <form action="{% url 'create' %}" method="post">
+        {% csrf_token %}
+            <div class="form-group form-group-margin">
+                <label class="form-label">Task</label>
+                <input type="text" class="form-control" placeholder="example: Complete first draft of market memo" name="content">
+                <small id="emailHelp" class="form-text text-muted">Tasks should be no longer than a two sentences!</small>
+            </div>
+            <div>
+                <input style="display: none;" type="text" name="formtype" value="task">
+                <select style="display: none;" name="project">
+                    <option value="20000">None</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-outline-primary form-button">Create</button>
+    </form>
+
+    <!-- Loop for tasks includes select and removal buttons -->   
+    <h2 class="h2-center">All Tasks</h2>
+    <div class="row">
+        {% for task in tasks %}
+        <div class="col-sm-6">
+            <div class="card card-margin" data-task="{{ task.id }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ task.description }}</h5>
+                    <button class="select btn btn-outline-success" data-task="{{ task.id }}">Select</button>
+                    <button class="remove btn btn-outline-warning" data-task="{{ task.id }}">Remove</button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Loop for reminders includes removal buttons -->
+    <h2 class="h2-center">All Reminders</h2>
+    <div class="row">
+        {% for reminder in reminders %}
+        <div class="col-sm-6">
+            <div class="card card-margin" data-task="{{ reminder.id }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ reminder.description }}</h5>
+                    <p class="card-text">{{ reminder.reminder_date }}</p>
+                    <button class="remove btn btn-outline-warning" data-reminder="{{ reminder.id }}">Remove</button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
